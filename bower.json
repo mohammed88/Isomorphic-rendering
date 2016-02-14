@@ -1,0 +1,22 @@
+{
+  "name": "Demo",
+  "description": "",
+  "main": "",
+  "authors": [
+    "mohammed-impelsys <mohammed.khan.cmr@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbonefire": "~0.5.1"
+  }
+}
