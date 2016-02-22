@@ -3,6 +3,7 @@
 var Backbone = require('backbone');
 var React = require('react');
 var ReactDOM = require('react-dom');
+var browserHistory = require('react-router').browserHistory;
 var TodoItem = require('./todo-item');
 
 var TodoList = React.createClass({
@@ -11,22 +12,23 @@ var TodoList = React.createClass({
 	mixins: [Backbone.Events],
 
 	componentDidMount: function componentDidMount() {
-		this.listenTo(this.props.todos, 'add remove change', function () {
+		this.listenTo(this.props.route.todos, 'add remove change', function () {
 			this.forceUpdate();
 		}, this);
-		this.props.todos.fetch();
+		this.props.route.todos.fetch();
 	},
 	getInitialState: function getInitialState() {
 		return { editing: null };
 	},
 	logout: function logout(e) {
 		e.preventDefault();
-		window.ref.unauth();
-		window.app.router.navigate('', { trigger: true });
+		document.cookie = "email=undefined";
+		document.cookie = "password=undefined";
+		browserHistory.push('/logout');
 	},
 	add: function add(e) {
 		e.preventDefault();
-		this.props.todos.create({ title: this.refs.new.value });
+		this.props.route.todos.create({ title: this.refs.new.value });
 		this.refs.new.value = "";
 		this.refs.new.focus();
 	},
@@ -46,7 +48,7 @@ var TodoList = React.createClass({
 		this.setState({ editing: null });
 	},
 	render: function render() {
-		var todos = this.props.todos;
+		var todos = this.props.route.todos;
 		var list = todos.map(function (todo) {
 			return React.createElement(TodoItem, {
 				key: todo.attributes.id,
